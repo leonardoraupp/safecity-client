@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, FlatList, Alert } from "react-native";
-import users from '../data/users'
 import { ListItem, Button, Icon } from "@rneui/base";
 import { Avatar } from '@rneui/themed';
+import UsersContext from "../context/UsersContext";
 
 
 export default props => {
 
-    function conformUserDeletion(user) {
+    const { state, dispatch } = useContext(UsersContext)
+
+    function confirmUserDeletion(user) {
         Alert.alert("Excluir usuário", "Deseja excluir este usuário?", [
             {
                 text: "Sim",
                 onPress() {
-                    console.warn("delete " + user.id)
+                    dispatch({      // Happen an event and Action object is sent throw the dispatch() with two params.    
+                        type: "deleteUser",
+                        payload: user
+                    })
                 }
             },
             {
@@ -25,14 +30,14 @@ export default props => {
         return (
             <>
                 <Button
-                    onPress={() => { props.navigation.navigate('UserForm', user) }}
+                    onPress={() => props.navigation.navigate('UserForm', user)}
                     type="clear"
                     icon={<Icon name="edit" size={25} color="orange" />}
 
 
                 />
                 <Button
-                    onPress={() => { conformUserDeletion(user) }}
+                    onPress={() => confirmUserDeletion(user)}
                     type="clear"
                     icon={<Icon name="delete" size={25} color="red" />}
 
@@ -65,7 +70,7 @@ export default props => {
         <View>
             <FlatList
                 keyExtractor={user => user.id.toString()}
-                data={users}
+                data={state.users}
                 renderItem={getUserItem}
             />
         </View>
