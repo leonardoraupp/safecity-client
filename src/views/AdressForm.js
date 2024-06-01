@@ -9,26 +9,40 @@ export default ({ route, navigation }) => {
 
     return (
         <View style={styles.form}>
-            <Text>Nome</Text>
+            <Text>CEP</Text>
             <TextInput
                 style={styles.input}
                 onChangeText={name => setUser({ ...user, name })}
-                placeholder="Informe o nome"
+                placeholder="Informe o CEP"
                 value={user.name}
             />
-            <Text>Email</Text>
+            <Text>Rua</Text>
+            <TextInput
+                style={styles.input}
+                onChangeText={name => setUser({ ...user, name })}
+                placeholder="Informe o nome da rua"
+                value={user.name}
+            />
+            <Text>Bairro</Text>
             <TextInput
                 style={styles.input}
                 onChangeText={email => setUser({ ...user, email })}
-                placeholder="Informe o email"
+                placeholder="Informe o nome do bairro"
                 value={user.email}
             />
-            <Text>URL do Avatar</Text>
+            <Text>Cidade</Text>
             <TextInput
                 style={styles.input}
-                onChangeText={avatarUrl => setUser({ ...user, avatarUrl })}
-                placeholder="Informe a URL"
-                value={user.avatarUrl}
+                onChangeText={email => setUser({ ...user, email })}
+                placeholder="Informe o nome da cidade"
+                value={user.email}
+            />
+            <Text>Estado</Text>
+            <TextInput
+                style={styles.input}
+                onChangeText={email => setUser({ ...user, email })}
+                placeholder="Informe o nome do estado"
+                value={user.email}
             />
             <Button
                 title="Salvar"

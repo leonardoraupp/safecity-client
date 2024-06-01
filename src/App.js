@@ -1,8 +1,8 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import UserForm from "./views/UserForm";
-import UserList from "./views/UserList";
+import AdressForm from "./views/AdressForm";
+import AdressList from "./views/AdressList";
 import { Button, Icon } from "@rneui/base";
 import { UsersProvider } from "./context/UsersContext";
 
@@ -13,19 +13,19 @@ export default props => {
         <UsersProvider>
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName="UserList"
+                    initialRouteName="AdressList"
                     screenOptions={screenOptions}>
                     <Stack.Screen
-                        name="UserList"
-                        component={UserList}
+                        name="AdressList"
+                        component={AdressList}
                         options={
                             ({ navigation }) => {
                                 return {
-                                    title: "Lista de usuários",
+                                    title: "Endereços avaliados",
                                     headerRight: () => (
                                         <Button
                                             onPress={() => {
-                                                navigation.navigate("UserForm")
+                                                navigation.navigate("AdressForm")
                                             }}
                                             type="clear"
                                             icon={<Icon name="add" size={25} color={"white"} />}
@@ -37,10 +37,10 @@ export default props => {
 
                     />
                     <Stack.Screen
-                        name="UserForm"
-                        component={UserForm}
+                        name="AdressForm"
+                        component={AdressForm}
                         options={{
-                            title: "Formulário de usuários"
+                            title: "Novo de endereço"
                         }}
                     />
                 </Stack.Navigator>

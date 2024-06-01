@@ -10,7 +10,7 @@ export default props => {
     const { state, dispatch } = useContext(UsersContext)
 
     function confirmUserDeletion(user) {
-        Alert.alert("Excluir usuário", "Deseja excluir este usuário?", [
+        Alert.alert("Excluir endereço", "Deseja excluir este endereço?", [
             {
                 text: "Sim",
                 onPress() {
@@ -30,7 +30,7 @@ export default props => {
         return (
             <>
                 <Button
-                    onPress={() => props.navigation.navigate('UserForm', user)}
+                    onPress={() => props.navigation.navigate('AdressForm', user)}
                     type="clear"
                     icon={<Icon name="edit" size={25} color="orange" />}
 
@@ -51,7 +51,7 @@ export default props => {
             <ListItem
                 key={user.id}
                 bottomDivider
-                onPress={() => props.navigation.navigate('UserForm', user)}
+                onPress={() => props.navigation.navigate('AdressForm', user)}
             >
                 <Avatar
                     size={50}
