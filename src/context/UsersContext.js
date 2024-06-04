@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react" // useReducer it's based on Redux.
+import React, { createContext, useReducer } from "react"
 import users from '../data/users'
 
 const initialState = { users }
