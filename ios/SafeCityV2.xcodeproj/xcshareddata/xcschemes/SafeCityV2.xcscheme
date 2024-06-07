@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "SafeCityV2.app"
-               BlueprintName = "SafeCityV2"
-               ReferencedContainer = "container:SafeCityV2.xcodeproj">
+               BuildableName = "safecity.app"
+               BlueprintName = "safecity"
+               ReferencedContainer = "container:safecity.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "SafeCityV2Tests.xctest"
-               BlueprintName = "SafeCityV2Tests"
-               ReferencedContainer = "container:SafeCityV2.xcodeproj">
+               BuildableName = "safecityTests.xctest"
+               BlueprintName = "safecityTests"
+               ReferencedContainer = "container:safecity.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "SafeCityV2.app"
-            BlueprintName = "SafeCityV2"
-            ReferencedContainer = "container:SafeCityV2.xcodeproj">
+            BuildableName = "safecity.app"
+            BlueprintName = "safecity"
+            ReferencedContainer = "container:safecity.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "SafeCityV2.app"
-            BlueprintName = "SafeCityV2"
-            ReferencedContainer = "container:SafeCityV2.xcodeproj">
+            BuildableName = "safecity.app"
+            BlueprintName = "safecity"
+            ReferencedContainer = "container:safecity.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

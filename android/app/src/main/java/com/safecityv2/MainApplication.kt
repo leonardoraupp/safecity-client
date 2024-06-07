@@ -1,4 +1,4 @@
-package com.safecityv2
+package com.safecity
 
 import android.app.Application
 import com.facebook.react.PackageList

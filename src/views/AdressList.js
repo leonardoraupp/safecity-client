@@ -3,20 +3,21 @@ import { View, FlatList, Alert } from "react-native";
 import { ListItem, Button, Icon } from "@rneui/base";
 import { Avatar } from '@rneui/themed';
 import UsersContext from "../context/UsersContext";
+import AdressesContext from "../context/AdressesContext";
 
 
 export default props => {
 
-    const { state, dispatch } = useContext(UsersContext)
+    const { state, dispatch } = useContext(AdressesContext)
 
-    function confirmUserDeletion(user) {
+    function confirmAdressDeletion(adress) {
         Alert.alert("Excluir endereço", "Deseja excluir este endereço?", [
             {
                 text: "Sim",
                 onPress() {
                     dispatch({      // Happen an event and Action object is sent throw the dispatch() with two params.    
-                        type: "deleteUser",
-                        payload: user
+                        type: "createAdress",
+                        payload: adress
                     })
                 }
             },
@@ -26,18 +27,18 @@ export default props => {
         ])
     }
 
-    function getActions(user) {
+    function getActions(adress) {
         return (
             <>
                 <Button
-                    onPress={() => props.navigation.navigate('AdressForm', user)}
+                    onPress={() => props.navigation.navigate('AdressForm', adress)}
                     type="clear"
                     icon={<Icon name="edit" size={25} color="orange" />}
 
 
                 />
                 <Button
-                    onPress={() => confirmUserDeletion(user)}
+                    onPress={() => confirmAdressDeletion(adress)}
                     type="clear"
                     icon={<Icon name="delete" size={25} color="red" />}
 
@@ -46,31 +47,31 @@ export default props => {
         )
     }
 
-    function getUserItem({ item: user }) {
+    function getUserItem({ item: adress }) {
         return (
             <ListItem
-                key={user.id}
+                key={adress.id}
                 bottomDivider
-                onPress={() => props.navigation.navigate('AdressForm', user)}
+                onPress={() => props.navigation.navigate('AdressForm', adress)}
             >
                 <Avatar
                     size={50}
                     rounded
-                    source={{ uri: user.avatarUrl }}
+                    source={{ uri: adress.avatarUrl }}
                 />
                 <ListItem.Content>
-                    <ListItem.Title>{user.name}</ListItem.Title>
-                    <ListItem.Subtitle>{user.email}</ListItem.Subtitle>
+                    <ListItem.Title>{adress.endereco}</ListItem.Title>
+                    <ListItem.Subtitle>{adress.cidade}</ListItem.Subtitle>
                 </ListItem.Content>
-                {getActions(user)}
+                {getActions(adress)}
             </ListItem>
         )
     }
     return (
         <View>
             <FlatList
-                keyExtractor={user => user.id.toString()}
-                data={state.users}
+                keyExtractor={adress => adress.id.toString()}
+                // data={state.adresses}
                 renderItem={getUserItem}
             />
         </View>
