@@ -4,13 +4,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import AdressForm from "./views/AdressForm";
 import AdressList from "./views/AdressList";
 import { Button, Icon } from "@rneui/base";
-import { UsersProvider } from "./context/UsersContext";
+import { AdressesProvider } from "./context/AdressesContext";
 
 const Stack = createNativeStackNavigator();
 
 export default props => {
     return (
-        <UsersProvider>
+        <AdressesProvider>
             <NavigationContainer>
                 <Stack.Navigator
                     initialRouteName="AdressList"
@@ -45,7 +45,7 @@ export default props => {
                     />
                 </Stack.Navigator>
             </NavigationContainer>
-        </UsersProvider>
+        </AdressesProvider>
     )
 }
 const screenOptions = {

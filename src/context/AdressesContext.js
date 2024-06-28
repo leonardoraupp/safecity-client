@@ -21,7 +21,7 @@ const actions = {
     }
 }
 
-export const UsersProvider = props => {
+export const AdressesProvider = props => {
 
     function reducer(state, action) { // receives the current state and the actions object and generante or not a new state how is sent to the interface.
         const fn = actions[action.type] // access the action method
@@ -31,9 +31,9 @@ export const UsersProvider = props => {
     const [state, dispatch] = useReducer(reducer, initialState)  // Hook userReducer
 
     return (
-        <UsersContext.Provider value={{ state, dispatch }}>
+        <AdressesContext.Provider value={{ state, dispatch }}>
             {props.children}
-        </UsersContext.Provider>  // a user data provider made from the Context API
+        </AdressesContext.Provider>  // a user data provider made from the Context API
     )
 }
 
