@@ -12,43 +12,43 @@ export default ({ route, navigation }) => {
             <Text>CEP</Text>
             <TextInput
                 style={styles.input}
-                onChangeText={estado => setAdress({ ...adress, estado })}
+                onChangeText={postalCode => setAdress({ ...adress, postalCode })}
                 placeholder="Informe o CEP"
-                value={adress.estado}
+                value={adress.postalCode}
             />
             <Text>Rua</Text>
             <TextInput
                 style={styles.input}
-                onChangeText={rua => setAdress({ ...adress, rua })}
+                onChangeText={adressName => setAdress({ ...adress, adressName })}
                 placeholder="Informe o nome da rua"
-                value={adress.rua}
+                value={adress.adressName}
             />
-            <Text>Bairro</Text>
+            {/* <Text>Bairro</Text>
             <TextInput
                 style={styles.input}
                 onChangeText={bairro => setAdress({ ...adress, bairro })}
                 placeholder="Informe o nome do bairro"
                 value={adress.bairro}
-            />
+            /> */}
             <Text>Cidade</Text>
             <TextInput
                 style={styles.input}
-                onChangeText={cidade => setAdress({ ...adress, cidade })}
+                onChangeText={city => setAdress({ ...adress, city })}
                 placeholder="Informe o nome da cidade"
-                value={adress.cidade}
+                value={adress.city}
             />
             <Text>Estado</Text>
             <TextInput
                 style={styles.input}
-                onChangeText={estado => setAdress({ ...adress, estado })}
+                onChangeText={state => setAdress({ ...adress, state })}
                 placeholder="Informe o nome do estado"
-                value={adress.estado}
+                value={adress.state}
             />
             <Button
                 title="Salvar"
                 onPress={() => {
                     dispatch({
-                        type: adress.id ? "createAdress" : "createAdress",
+                        type: adress.id ? "updateAdress" : "createAdress",
                         payload: adress
                     })
                     navigation.goBack()

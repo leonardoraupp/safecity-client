@@ -8,22 +8,9 @@ const BASE_URL = 'http://10.0.2.2:8000/adress' // O endereço IP especial para s
 
 import { API_URL } from "@env"
 
-// export async function fetchUsers() {
-//     try {
-//         const response = await fetch(BASE_URL);
-//         const data = await response.json();
-//         console.log(data)
-//         return data;
-//     } catch (error) {
-//         console.error('Erro ao buscar usuários:', error);
-//         throw error;
-//     }    
-// }
-
 export default props => {
 
     const { state, dispatch } = useContext(AdressesContext)
-    // console.log(Object.values(state.fetchAdresses))
 
     function confirmAdressDeletion(adress) {
         Alert.alert("Excluir endereço", "Deseja excluir este endereço?", [
@@ -69,11 +56,11 @@ export default props => {
                 bottomDivider
                 onPress={() => props.navigation.navigate('AdressForm', adress)}
             >
-                <Avatar
+                {/* <Avatar
                     size={50}
                     rounded
                     // source={{ uri: adress.avatarUrl }}
-                />
+                /> */}
                 <ListItem.Content>
                     <ListItem.Title>{adress.adressName}</ListItem.Title>
                     <ListItem.Subtitle>{adress.city}</ListItem.Subtitle>
@@ -92,15 +79,3 @@ export default props => {
         </View>
     )
 }
-
-//Teste de integração com  a API safecity app
-// {
-//     fetch(`${BASE_URL}/users`)
-//     .then((response) => response.json())
-//     .then((data) => {
-//         console.log('Dados recebidos do servidor:', data);
-//     })
-//     .catch((error) => {
-//         console.error('Erro ao buscar dados do servidor:', error);
-//     })
-// }
