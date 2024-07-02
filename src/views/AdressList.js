@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { View, FlatList, Alert } from "react-native";
-import { ListItem, Button, Icon } from "@rneui/base";
+import { ListItem, Button, Icon, Text } from "@rneui/base";
 import { Avatar } from '@rneui/themed';
 import AdressesContext from "../context/AdressesContext";
 
@@ -71,11 +71,12 @@ export default props => {
     }
     return (
         <View>
-            <FlatList
-                keyExtractor={adress => adress.id.toString()}
-                data={state.adresses}
-                renderItem={getUserItem}
-            />
+            {state.loading ? <Text>Carregado endereços...</Text> :
+                <FlatList
+                    keyExtractor={adress => adress.id.toString()}
+                    data={state.adresses}
+                    renderItem={getUserItem}
+                />}
         </View>
     )
 }

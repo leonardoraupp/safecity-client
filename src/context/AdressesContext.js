@@ -41,7 +41,6 @@ const actions = {
         return {
             ...state,
             adresses: updatedAdresses,
-            loading: false,
             currentAction: "updateAdress"
 
         };
