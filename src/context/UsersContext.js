@@ -1,7 +1,8 @@
 import React, { createContext, useReducer } from "react" 
 import users from '../data/users'
+import { fetchUsers } from '../api/user'
 
-const initialState = { users }
+const initialState = { fetchUsers }
 const UsersContext = createContext({}) // creating a new context
 
 const actions = {

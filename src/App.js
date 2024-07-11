@@ -1,18 +1,16 @@
-import { API_URL } from "@env"
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import AdressForm from "./views/AdressForm";
 import AdressList from "./views/AdressList";
 import { Button, Icon } from "@rneui/base";
-import { AdressesProvider } from "./context/AdressesContext";
+import { AdressProvider } from "./context/AdressesContext";
 
 const Stack = createNativeStackNavigator();
-console.log("URL da API" + API_URL)
 
 export default props => {
     return (
-        <AdressesProvider>
+        <AdressProvider>
             <NavigationContainer>
                 <Stack.Navigator
                     initialRouteName="AdressList"
@@ -47,7 +45,7 @@ export default props => {
                     />
                 </Stack.Navigator>
             </NavigationContainer>
-        </AdressesProvider>
+        </AdressProvider>
     )
 }
 const screenOptions = {

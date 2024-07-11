@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { View, FlatList, Alert } from "react-native";
-import { ListItem, Button, Icon } from "@rneui/base";
+import { ListItem, Button, Icon, Text } from "@rneui/base";
 import { Avatar } from '@rneui/themed';
-import UsersContext from "../context/UsersContext";
 import AdressesContext from "../context/AdressesContext";
 
-const BASE_URL = 'http://10.0.2.2:8000' // O endereço IP especial para se comunicar com a máquina host a partir do emulador Android é 10.0.2.2
+const BASE_URL = 'http://10.0.2.2:8000/adress' // O endereço IP especial para se comunicar com a máquina host a partir do emulador Android é 10.0.2.2
+
+import { API_URL } from "@env"
 
 export default props => {
 
@@ -17,7 +18,7 @@ export default props => {
                 text: "Sim",
                 onPress() {
                     dispatch({      // Happen an event and Action object is sent throw the dispatch() with two params.    
-                        type: "createAdress",
+                        type: "deleteAdress",
                         payload: adress
                     })
                 }
@@ -55,14 +56,14 @@ export default props => {
                 bottomDivider
                 onPress={() => props.navigation.navigate('AdressForm', adress)}
             >
-                <Avatar
+                {/* <Avatar
                     size={50}
                     rounded
-                    source={{ uri: adress.avatarUrl }}
-                />
+                    // source={{ uri: adress.avatarUrl }}
+                /> */}
                 <ListItem.Content>
-                    <ListItem.Title>{adress.endereco}</ListItem.Title>
-                    <ListItem.Subtitle>{adress.cidade}</ListItem.Subtitle>
+                    <ListItem.Title>{adress.adressName}</ListItem.Title>
+                    <ListItem.Subtitle>{adress.city}</ListItem.Subtitle>
                 </ListItem.Content>
                 {getActions(adress)}
             </ListItem>
@@ -70,23 +71,12 @@ export default props => {
     }
     return (
         <View>
-            <FlatList
-                keyExtractor={adress => adress.id.toString()}
-                data={state.adresses}
-                renderItem={getUserItem}
-            />
+            {state.loading ? <Text>Carregado endereços...</Text> :
+                <FlatList
+                    keyExtractor={adress => adress.id.toString()}
+                    data={state.adresses}
+                    renderItem={getUserItem}
+                />}
         </View>
     )
 }
-
-//Teste de integração com  a API safecity app
-// {
-//     fetch(`${BASE_URL}/users`)
-//     .then((response) => response.json())
-//     .then((data) => {
-//         console.log('Dados recebidos do servidor:', data);
-//     })
-//     .catch((error) => {
-//         console.error('Erro ao buscar dados do servidor:', error);
-//     })
-// }
