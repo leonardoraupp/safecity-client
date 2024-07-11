@@ -2,15 +2,19 @@ import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "@env"
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import adresses from "../data/adresses";
 
 const initialState = {
     adresses: [], // inicialmente vazio
     loading: true,
-    currentAction: ''
+    currentAction: 'getAdress'
 }
+let response = ''
 
 const AdressesContext = createContext({})
-let newAdress = {};
+let adressToBeUpdated = {}
+let adressToBeDeleted = {}
+let adressToBeCreated = {}
 const actions = {
 
     getAdress(state, action) {
@@ -22,21 +26,17 @@ const actions = {
         }
     },
     createAdress(state, action) {
-        const adress = action.payload
-        adress.id = Math.random()
+        adressToBeCreated = action.payload
+        adressToBeCreated.id = Math.random()
         return {
             ...state,
-            adresses: [...state.adresses, adress],
+            adresses: [...state.adresses, adressToBeCreated],
             currentAction: "createAdress"
         }
     },
     updateAdress(state, action) {
-        newAdress = action.payload;
-        const updatedAdresses = state.adresses.map((a) =>
-            a.id === newAdress.id ? newAdress : a
-        );
-
-
+        adressToBeUpdated = action.payload;
+        const updatedAdresses = state.adresses.map(a => a.id === adressToBeUpdated.id ? adressToBeUpdated : a)
         // Atualiza o estado com os endereços atualizados
         return {
             ...state,
@@ -46,7 +46,13 @@ const actions = {
         };
     },
     deleteAdress(state, action) {
-
+        adressToBeDeleted = action.payload // adress passed for deletation
+        const updatedAdresses = state.adresses.filter(a => a.id !== adressToBeDeleted.id) // returns a new adresses object without the adress deleted.
+        return {
+            ...state, // it clones the current states of the app
+            adresses: updatedAdresses,
+            currentAction: 'deleteAdress' // it defines which endpoint will be call.
+        }
     }
 }
 
@@ -61,31 +67,43 @@ export const AdressProvider = props => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${API_URL}/adress`);
-                dispatch({ type: 'getAdress', payload: response.data });
-
-                const updatedAdress = state.adresses.find((a) => a.id === newAdress.id);
-                // Crie um novo objeto para armazenar os dados filtrados
+                const currentAction = state.currentAction
+                const adressToBeModified = currentAction == 'updateAdress' ? state.adresses.find((a) => a.id === adressToBeUpdated.id) : state.adresses.find((a) => a.id === adressToBeCreated.id);
                 const filteredParams = {};
-                for (const key in updatedAdress) {
+
+                // Crie um novo objeto para armazenar os dados filtrados
+                for (const key in adressToBeModified) {
                     if (key != 'createdAt' && key != 'updatedAt' && key != 'id') {
-                        filteredParams[key] = updatedAdress[key]; // exemplo filteredParam.city = updatedAdress.city
+                        filteredParams[key] = adressToBeModified[key]; // exemplo filteredParam.city = updatedAdress.city
                     }
                 }
 
-                // Atualiza o servidor com os dados do estado
-                if (state.currentAction == 'updateAdress') {
-                    if (updatedAdress) {
-                        const response = await axios.put(`${API_URL}/adress/${updatedAdress.id}`, filteredParams);
-                        const result = await axios.get(`${API_URL}/adress/${updatedAdress.id}`);
-                    }
+                switch (currentAction) {
+                    case 'getAdress':
+                        response = await axios.get(`${API_URL}/adress`);
+                        dispatch({ type: 'getAdress', payload: response.data });
+                        break
+
+                    case 'createAdress':
+                        response = await axios.post(`${API_URL}/adress`, filteredParams);
+                        break
+                    case 'updateAdress':
+                            await axios.put(`${API_URL}/adress/${adressToBeUpdated.id}`, filteredParams);
+                        break
+
+                    case 'deleteAdress':
+                        await axios.delete(`${API_URL}/adress/${adressToBeDeleted.id}`);
+                        break
+                    default:
+                        await axios.get(`${API_URL}/adress`);
+                        break;
                 }
             } catch (error) {
                 console.error('Erro ao buscar ou manipular endereços:', error);
             }
         };
         fetchData();
-    }, [state.currentAction, newAdress]); // Adicione action.payload.id como dependência
+    }, [state.currentAction, adressToBeUpdated]); // Adicione action.payload.id como dependência
     return (
         <AdressesContext.Provider value={{ state, dispatch }}>
             {props.children}

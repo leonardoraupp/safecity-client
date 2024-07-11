@@ -18,7 +18,7 @@ export default props => {
                 text: "Sim",
                 onPress() {
                     dispatch({      // Happen an event and Action object is sent throw the dispatch() with two params.    
-                        type: "createAdress",
+                        type: "deleteAdress",
                         payload: adress
                     })
                 }
