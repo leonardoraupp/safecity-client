@@ -1,19 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 import AdressesContext from "../context/AdressesContext"; // Importe o contexto
 import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
+import AddressReviewSlider from "../components/AddressReviewSlider";
 
 export default ({ route, navigation }) => {
 
     const { dispatch } = useContext(AdressesContext) // Use o contexto
+
     const formik = useFormik({
         initialValues: {
             postalCode: route.params?.postalCode || '', // Valor inicial do CEP
             addressName: route.params?.addressName || '',
             city: route.params?.city || '',
             state: route.params?.state || '',
+            score: route.params?.sliderValue || '',
+            comment: route.params?.comment || ''
         },
         validationSchema: Yup.object({
             postalCode: Yup.string()
@@ -25,6 +29,7 @@ export default ({ route, navigation }) => {
                 .required("Campo cidade é obrigatório"),
             state: Yup.string()
                 .required("Campo estado é obrigatório"),
+            // sliderValue: Yup.required("Campo nota é obrigatório"),
         }),
         onSubmit: (values) => {
             // Lógica para lidar com o envio do formulário
@@ -40,7 +45,6 @@ export default ({ route, navigation }) => {
         try {
             const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
             const data = response.data;
-            console.log("Retorno:" + data.localidade)
             formik.setFieldValue('addressName', data.logradouro);
             formik.setFieldValue('city', data.localidade);
             formik.setFieldValue('state', data.uf);
@@ -48,6 +52,11 @@ export default ({ route, navigation }) => {
             console.error('Erro ao buscar CEP:', error.message);
         }
     };
+
+    // a function to receive the Slider value from the child component
+    const handleSliderValueChange = (value) => {
+        formik.setFieldValue("score", value)
+    }
 
 
     return (
@@ -104,8 +113,13 @@ export default ({ route, navigation }) => {
             {formik.touched.state && formik.errors.state && (
                 <Text style={{ color: 'red' }}>{formik.errors.state}</Text>)
             }
+            <AddressReviewSlider onSliderValueChange={handleSliderValueChange} />
+            <TextInput
+                style={styles.commentInput}
+                placeholder="Informe seu relato pra gente!"
+                onChangeText={(comment) => { formik.setFieldValue('comment', comment) }}
+            />
             <Button onPress={formik.handleSubmit} title="Salvar" disabled={!formik.isValid} />
-
         </View>)
 }
 const styles = StyleSheet.create({
