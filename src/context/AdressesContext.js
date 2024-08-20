@@ -1,8 +1,10 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
-import { API_URL } from "@env"
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import adresses from "../data/adresses";
+import Config from 'react-native-config';
+
+const API_URL = Config.API_URL;
 
 const initialState = {
     adresses: [], // inicialmente vazio

@@ -3,10 +3,9 @@ import { View, FlatList, Alert } from "react-native";
 import { ListItem, Button, Icon, Text } from "@rneui/base";
 import { Avatar } from '@rneui/themed';
 import AdressesContext from "../context/AdressesContext";
+import Config from 'react-native-config';
 
-const BASE_URL = 'http://10.0.2.2:8000/adress' // O endereço IP especial para se comunicar com a máquina host a partir do emulador Android é 10.0.2.2
-
-import { API_URL } from "@env"
+const API_URL = Config.API_URL;
 
 export default props => {
 
