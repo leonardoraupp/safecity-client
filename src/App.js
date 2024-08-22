@@ -5,6 +5,7 @@ import AdressForm from "./views/AdressForm";
 import AdressList from "./views/AdressList";
 import { Button, Icon } from "@rneui/base";
 import { AdressProvider } from "./context/AdressesContext";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,7 +51,7 @@ export default props => {
 }
 const screenOptions = {
     headerStyle: {
-        backgroundColor: '#f4511e'
+        backgroundColor: '#715aff'
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
@@ -58,3 +59,14 @@ const screenOptions = {
     }
 
 }
+
+// Colors
+// #715aff Medium slate blue
+// #55c1ff Maya blue
+// #5887ff Conflower blue 
+// #a682ff Tropical indigo
+// #102e4a Prussian blue
+
+//white tones
+// #d0cfcf tinberwolf
+// #fffbfe snow
