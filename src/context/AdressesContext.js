@@ -1,19 +1,19 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
-import adresses from "../data/adresses";
+import addresses from "../data/adresses";
 import Config from 'react-native-config';
 
 const API_URL = Config.API_URL;
 
 const initialState = {
-    adresses: [], // inicialmente vazio
+    addresses: [], // inicialmente vazio
     loading: true,
     currentAction: 'getAdress'
 }
 let response = ''
 
-const AdressesContext = createContext({})
+const AddressesContext = createContext({})
 let adressToBeUpdated = {}
 let adressToBeDeleted = {}
 let adressToBeCreated = {}
@@ -22,7 +22,7 @@ const actions = {
     getAdress(state, action) {
         return {
             ...state,
-            adresses: action.payload,
+            addresses: action.payload,
             loading: false,
             currentAction: "getAdress"
         }
@@ -32,28 +32,28 @@ const actions = {
         adressToBeCreated.id = Math.random()
         return {
             ...state,
-            adresses: [...state.adresses, adressToBeCreated],
+            addresses: [...state.addresses, adressToBeCreated],
             currentAction: "createAdress"
         }
     },
     updateAdress(state, action) {
         adressToBeUpdated = action.payload;
-        const updatedAdresses = state.adresses.map(a => a.id === adressToBeUpdated.id ? adressToBeUpdated : a)
+        const updatedAddresses = state.addresses.map(a => a.id === adressToBeUpdated.id ? adressToBeUpdated : a)
         // Atualiza o estado com os endereços atualizados
         return {
             ...state,
-            adresses: updatedAdresses,
+            addresses: updatedAddresses,
             currentAction: "updateAdress"
 
         };
     },
-    deleteAdress(state, action) {
+    deleteAddress(state, action) {
         adressToBeDeleted = action.payload // adress passed for deletation
-        const updatedAdresses = state.adresses.filter(a => a.id !== adressToBeDeleted.id) // returns a new adresses object without the adress deleted.
+        const updatedAddresses = state.addresses.filter(a => a.id !== adressToBeDeleted.id) // returns a new addresses object without the adress deleted.
         return {
             ...state, // it clones the current states of the app
-            adresses: updatedAdresses,
-            currentAction: 'deleteAdress' // it defines which endpoint will be call.
+            addresses: updatedAddresses,
+            currentAction: 'deleteAddress' // it defines which endpoint will be call.
         }
     }
 }
@@ -70,7 +70,7 @@ export const AdressProvider = props => {
         const fetchData = async () => {
             try {
                 const currentAction = state.currentAction
-                const adressToBeModified = currentAction == 'updateAdress' ? state.adresses.find((a) => a.id === adressToBeUpdated.id) : state.adresses.find((a) => a.id === adressToBeCreated.id);
+                const adressToBeModified = currentAction == 'updateAdress' ? state.addresses.find((a) => a.id === adressToBeUpdated.id) : state.addresses.find((a) => a.id === adressToBeCreated.id);
                 const filteredParams = {};
 
                 // Crie um novo objeto para armazenar os dados filtrados
@@ -93,7 +93,7 @@ export const AdressProvider = props => {
                             await axios.put(`${API_URL}/adress/${adressToBeUpdated.id}`, filteredParams);
                         break
 
-                    case 'deleteAdress':
+                    case 'deleteAddress':
                         await axios.delete(`${API_URL}/adress/${adressToBeDeleted.id}`);
                         break
                     default:
@@ -107,10 +107,10 @@ export const AdressProvider = props => {
         fetchData();
     }, [state.currentAction, adressToBeUpdated]); // Adicione action.payload.id como dependência
     return (
-        <AdressesContext.Provider value={{ state, dispatch }}>
+        <AddressesContext.Provider value={{ state, dispatch }}>
             {props.children}
-        </AdressesContext.Provider>  // a user data provider made from the Context API
+        </AddressesContext.Provider>  // a user data provider made from the Context API
     )
 }
 
-export default AdressesContext
+export default AddressesContext

@@ -26,7 +26,7 @@ const AddressReviewSlider = ({ onSliderValueChange }) => {
 
   return (
     <>
-      <Text>Avalie o endereço!</Text>
+      <Text style={styles.text}>Avalie o endereço!</Text>
       <View style={styles.contentView}>
         <Slider
           value={value}
@@ -49,7 +49,12 @@ const AddressReviewSlider = ({ onSliderValueChange }) => {
             ),
           }}
         />
-        <Text style={{ paddingTop: 20 }}>Nota: {value}</Text>
+        <Text style={{
+          paddingTop: 20, color: 'black',
+          fontWeight: 'bold',
+          padding:7,
+          fontSize: 15
+        }}>Nota: {value}</Text>
       </View>
     </>
   );
@@ -76,6 +81,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingVertical: 5,
     marginBottom: 10
+  },
+  text: {
+    color: 'black',
+    fontWeight: 'bold',
+    padding:7,
+    fontSize: 15
   }
 });
 
