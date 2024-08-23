@@ -5,6 +5,7 @@ import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
 import AddressReviewSlider from "../components/AddressReviewSlider";
+import SendButton from "../components/SendButton";
 
 export default ({ route, navigation }) => {
 
@@ -119,36 +120,37 @@ export default ({ route, navigation }) => {
                     style={styles.commentInput}
                     placeholder="Informe seu relato pra gente!"
                     onChangeText={(comment) => { formik.setFieldValue('comment', comment) }}
+                    value={formik.values.comment}
                 />
-                <Button onPress={formik.handleSubmit} title="Salvar" disabled={!formik.isValid} style={styles.title} />
+                <SendButton onPress={formik.handleSubmit} title="Salvar" disabled={!formik.isValid}/>
             </View>
         </View>)
 }
 const styles = StyleSheet.create({
-    conteiner:{
+    conteiner: {
         flex: 1,
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
     form: {
-    width: '100%',        
-    maxWidth: 400, // Max width for the form
-    padding: 20, // Padding inside the form
-    margin: 20, // Margin around the form
-    backgroundColor: '#fff', // Background color for the form
-    borderRadius: 10, // Rounded corners
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5, // Shadow for Android
+        width: '100%',
+        maxWidth: 400, // Max width for the form
+        padding: 20, // Padding inside the form
+        margin: 20, // Margin around the form
+        backgroundColor: '#fff', // Background color for the form
+        borderRadius: 10, // Rounded corners
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5, // Shadow for Android
     },
     text: {
         color: 'black',
         fontWeight: 'bold', // Increase the weight
         padding: 7,
-        fontSize: 15,
+        fontSize: 16,
         marginBottom: 10,
     },
     textInput: {
@@ -171,7 +173,8 @@ const styles = StyleSheet.create({
         width: '100%',
 
     },
-    title: {
+    sendButton: {
+        backgroundColor: '#075E54',
         fontSize: 15,
         fontWeight: "bold",
         color: "black"

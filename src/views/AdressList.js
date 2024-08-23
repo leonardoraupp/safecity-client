@@ -91,7 +91,7 @@ export default props => {
     }
     useEffect(() => {  //Use the useEffect hook to update filteredData whenever state.addresses changes or when the component mounts.
         setFilteredData(state.addresses);
-      }, [state.addresses]);
+    }, [state.addresses]);
     const updateSearch = (search) => {
         setSearch(search);
         filterData(selectedIndex, search);
@@ -131,12 +131,17 @@ export default props => {
                 onPress={(index) => filterData(index)}
                 selectedIndex={selectedIndex}
                 buttons={['Todos', 'Seguros', 'Perigosos']}
+                textStyle={{ color: '#128C7E', fontWeight: 'bold', fontSize: 16 }}
+                selectedButtonStyle={{
+                    backgroundColor: '#128C7E',
+                }}
             />
             {state.loading ? <Text>Carregado endereços...</Text> :
                 <FlatList
                     keyExtractor={address => address.id.toString()}
                     data={filteredData}
                     renderItem={getUserItem}
+                    style={{ fontSize: 16 }}
                 />}
         </View>
     )

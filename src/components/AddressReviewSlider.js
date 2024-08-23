@@ -40,8 +40,9 @@ const AddressReviewSlider = ({ onSliderValueChange }) => {
           thumbProps={{
             children: (
               <Icon
-                // name="heart"
-                size={20}
+                name="heart-outline"
+                type='ionicon'
+                size={18}
                 reverse
                 containerStyle={{ bottom: 20, right: 20 }}
                 color={color()}
