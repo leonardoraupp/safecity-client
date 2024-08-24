@@ -3,9 +3,9 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import AdressForm from "./views/AdressForm";
 import AdressList from "./views/AdressList";
+import AddressDetails from "./views/AddressDetails";
 import { Button, Icon } from "@rneui/base";
 import { AdressProvider } from "./context/AdressesContext";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +44,13 @@ export default props => {
                             title: "Novo de endereço"
                         }}
                     />
+                    <Stack.Screen
+                        name="AddressDetails"
+                        component={AddressDetails}
+                        options={{
+                            title: "Detalhes"
+                        }}
+                    />
                 </Stack.Navigator>
             </NavigationContainer>
         </AdressProvider>
@@ -63,7 +70,7 @@ const screenOptions = {
 // Colors
 // #715aff Medium slate blue
 // #55c1ff Maya blue
-// #5887ff Conflower blue 
+// #5887ff Conflower blue
 // #a682ff Tropical indigo
 // #102e4a Prussian blue
 

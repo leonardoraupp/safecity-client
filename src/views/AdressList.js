@@ -81,14 +81,17 @@ export default props => {
                     source={{ uri: getAvatar() }}
                 />
                 <ListItem.Content>
-                    <ListItem.Title style={{ color: getColor(address.score), fontWeight: 'bold', size: 18 }}>Nota {address.score}</ListItem.Title>
-                    <ListItem.Title>{address.addressName}</ListItem.Title>
-                    <ListItem.Subtitle>{address.city} - {address.state}</ListItem.Subtitle>
+                    <ListItem.Title onPress={() => props.navigation.navigate('AddressDetails', address)}
+                        style={{ color: getColor(address.score), fontWeight: 'bold', size: 18 }}>Nota {address.score}
+                    </ListItem.Title>
+                    <ListItem.Title onPress={() => props.navigation.navigate('AddressDetails', address)}>{address.addressName}</ListItem.Title>
+                    <ListItem.Subtitle onPress={() => props.navigation.navigate('AddressDetails', address)}>{address.city} - {address.state}</ListItem.Subtitle>
                 </ListItem.Content>
                 {getActions(address)}
             </ListItem>
         )
     }
+
     useEffect(() => {  //Use the useEffect hook to update filteredData whenever state.addresses changes or when the component mounts.
         setFilteredData(state.addresses);
     }, [state.addresses]);
