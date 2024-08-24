@@ -14,6 +14,12 @@ export default ({ route, navigation }) => {
             <Text>teste</Text>
         </ListItem>
     )
+    const securyLevelScore = () => {
+        const postalCode = route.params?.postalCode
+        const list = state.addresses.filter(address => address.postalCode === postalCode)
+        const addressScore = list.reduce((accumulator, item) => accumulator + item.score, 0)
+        return list.length > 0 ? addressScore / list.length : 0
+    }
 
     return (
         <View>
@@ -23,10 +29,10 @@ export default ({ route, navigation }) => {
             </View>
             <View style={styles.addressInfo}>
                 <Text style={styles.tittle}>Nível de segurança</Text>
-                <Text style={styles.text}>10 de 10 </Text>
+                <Text style={styles.text}>{securyLevelScore()} </Text>
             </View>
             <View style={styles.addressInfo} >
-            <Text style={styles.tittle}>Avaliações feitas</Text>
+                <Text style={styles.tittle}>Avaliações feitas</Text>
                 <FlatList
                     keyExtractor={address => address.id.toString()}
                     renderItem={renderAddress}

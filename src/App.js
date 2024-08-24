@@ -5,13 +5,13 @@ import AdressForm from "./views/AdressForm";
 import AdressList from "./views/AdressList";
 import AddressDetails from "./views/AddressDetails";
 import { Button, Icon } from "@rneui/base";
-import { AdressProvider } from "./context/AdressesContext";
+import { AddressProvider } from "./context/AdressesContext";
 
 const Stack = createNativeStackNavigator();
 
 export default props => {
     return (
-        <AdressProvider>
+        <AddressProvider>
             <NavigationContainer>
                 <Stack.Navigator
                     initialRouteName="AdressList"
@@ -53,7 +53,7 @@ export default props => {
                     />
                 </Stack.Navigator>
             </NavigationContainer>
-        </AdressProvider>
+        </AddressProvider>
     )
 }
 const screenOptions = {

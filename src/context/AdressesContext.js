@@ -9,47 +9,47 @@ const API_URL = Config.API_URL;
 const initialState = {
     addresses: [], // inicialmente vazio
     loading: true,
-    currentAction: 'getAdress'
+    currentAction: 'getAddress'
 }
 let response = ''
 
 const AddressesContext = createContext({})
-let adressToBeUpdated = {}
-let adressToBeDeleted = {}
-let adressToBeCreated = {}
+let addressToBeUpdated = {}
+let addressToBeDeleted = {}
+let addressToBeCreated = {}
 const actions = {
 
-    getAdress(state, action) {
+    getAddress(state, action) {
         return {
             ...state,
             addresses: action.payload,
             loading: false,
-            currentAction: "getAdress"
+            currentAction: "getAddress"
         }
     },
-    createAdress(state, action) {
-        adressToBeCreated = action.payload
-        adressToBeCreated.id = Math.random()
+    createAddress(state, action) {
+        addressToBeCreated = action.payload
+        addressToBeCreated.id = Math.random()
         return {
             ...state,
-            addresses: [...state.addresses, adressToBeCreated],
-            currentAction: "createAdress"
+            addresses: [...state.addresses, addressToBeCreated],
+            currentAction: "createAddress"
         }
     },
-    updateAdress(state, action) {
-        adressToBeUpdated = action.payload;
-        const updatedAddresses = state.addresses.map(a => a.id === adressToBeUpdated.id ? adressToBeUpdated : a)
+    updateAddress(state, action) {
+        addressToBeUpdated = action.payload;
+        const updatedAddresses = state.addresses.map(a => a.id === addressToBeUpdated.id ? addressToBeUpdated : a)
         // Atualiza o estado com os endereços atualizados
         return {
             ...state,
             addresses: updatedAddresses,
-            currentAction: "updateAdress"
+            currentAction: "updateAddress"
 
         };
     },
     deleteAddress(state, action) {
-        adressToBeDeleted = action.payload // adress passed for deletation
-        const updatedAddresses = state.addresses.filter(a => a.id !== adressToBeDeleted.id) // returns a new addresses object without the adress deleted.
+        addressToBeDeleted = action.payload // address passed for deletation
+        const updatedAddresses = state.addresses.filter(a => a.id !== addressToBeDeleted.id) // returns a new addresses object without the address deleted.
         return {
             ...state, // it clones the current states of the app
             addresses: updatedAddresses,
@@ -58,46 +58,46 @@ const actions = {
     }
 }
 
-function adressReducer(state, action) { // receives the current state and the actions object and generante or not a new state how is sent to the interface.
+function addressReducer(state, action) { // receives the current state and the actions object and generante or not a new state how is sent to the interface.
     const fn = actions[action.type] // access the action method
     return fn ? fn(state, action) : state
 }
 
-export const AdressProvider = props => {
-    const [state, dispatch] = useReducer(adressReducer, initialState)  // Hook adressReducer
+export const AddressProvider = props => {
+    const [state, dispatch] = useReducer(addressReducer, initialState)  // Hook addressReducer
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const currentAction = state.currentAction
-                const adressToBeModified = currentAction == 'updateAdress' ? state.addresses.find((a) => a.id === adressToBeUpdated.id) : state.addresses.find((a) => a.id === adressToBeCreated.id);
+                const addressToBeModified = currentAction == 'updateAddress' ? state.addresses.find((a) => a.id === addressToBeUpdated.id) : state.addresses.find((a) => a.id === addressToBeCreated.id);
                 const filteredParams = {};
 
                 // Crie um novo objeto para armazenar os dados filtrados
-                for (const key in adressToBeModified) {
+                for (const key in addressToBeModified) {
                     if (key != 'createdAt' && key != 'updatedAt' && key != 'id') {
-                        filteredParams[key] = adressToBeModified[key]; // exemplo filteredParam.city = updatedAdress.city
+                        filteredParams[key] = addressToBeModified[key]; // exemplo filteredParam.city = updatedAddress.city
                     }
                 }
 
                 switch (currentAction) {
-                    case 'getAdress':
-                        response = await axios.get(`${API_URL}/adress`);
-                        dispatch({ type: 'getAdress', payload: response.data });
+                    case 'getAddress':
+                        response = await axios.get(`${API_URL}/address`);
+                        dispatch({ type: 'getAddress', payload: response.data });
                         break
 
-                    case 'createAdress':
-                        response = await axios.post(`${API_URL}/adress`, filteredParams);
+                    case 'createAddress':
+                        response = await axios.post(`${API_URL}/address`, filteredParams);
                         break
-                    case 'updateAdress':
-                            await axios.put(`${API_URL}/adress/${adressToBeUpdated.id}`, filteredParams);
+                    case 'updateAddress':
+                            await axios.put(`${API_URL}/address/${addressToBeUpdated.id}`, filteredParams);
                         break
 
                     case 'deleteAddress':
-                        await axios.delete(`${API_URL}/adress/${adressToBeDeleted.id}`);
+                        await axios.delete(`${API_URL}/address/${addressToBeDeleted.id}`);
                         break
                     default:
-                        await axios.get(`${API_URL}/adress`);
+                        await axios.get(`${API_URL}/address`);
                         break;
                 }
             } catch (error) {
@@ -105,7 +105,7 @@ export const AdressProvider = props => {
             }
         };
         fetchData();
-    }, [state.currentAction, adressToBeUpdated]); // Adicione action.payload.id como dependência
+    }, [state.currentAction, addressToBeUpdated]); // Adicione action.payload.id como dependência
     return (
         <AddressesContext.Provider value={{ state, dispatch }}>
             {props.children}
