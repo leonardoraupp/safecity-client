@@ -15,7 +15,7 @@ const SendButton = ({ onPress, title, disabled }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#128C7E',
+    backgroundColor: '#25D366',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

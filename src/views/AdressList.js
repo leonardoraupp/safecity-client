@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View, FlatList, Alert } from "react-native";
+import { View, FlatList, Alert, StyleSheet } from "react-native";
 import { ListItem, Button, Icon, Text } from "@rneui/base";
 import { Avatar, withTheme, ButtonGroup, SearchBar } from '@rneui/themed';
 import AddressesContext from "../context/AdressesContext";
@@ -37,14 +37,14 @@ export default props => {
                 <Button
                     onPress={() => props.navigation.navigate('AdressForm', address)}
                     type="clear"
-                    icon={<Icon name="edit" size={25} color="orange" />}
+                    icon={<Icon type="ionicon" name="create-outline" size={25} />}
 
 
                 />
                 <Button
                     onPress={() => confirmAddressDeletion(address)}
                     type="clear"
-                    icon={<Icon name="delete" size={25} color="red" />}
+                    icon={<Icon type="ionicon" name="trash-outline" size={25} />}
 
                 />
             </>
@@ -84,8 +84,8 @@ export default props => {
                     <ListItem.Title onPress={() => props.navigation.navigate('AddressDetails', address)}
                         style={{ color: getColor(address.score), fontWeight: 'bold', size: 18 }}>Nota {address.score}
                     </ListItem.Title>
-                    <ListItem.Title onPress={() => props.navigation.navigate('AddressDetails', address)}>{address.addressName}</ListItem.Title>
-                    <ListItem.Subtitle onPress={() => props.navigation.navigate('AddressDetails', address)}>{address.city} - {address.state}</ListItem.Subtitle>
+                    <ListItem.Subtitle style={styles.text} onPress={() => props.navigation.navigate('AddressDetails', address)}>{address.addressName}</ListItem.Subtitle>
+                    <ListItem.Subtitle style={styles.text} onPress={() => props.navigation.navigate('AddressDetails', address)}>{address.city} - {address.state}</ListItem.Subtitle>
                 </ListItem.Content>
                 {getActions(address)}
             </ListItem>
@@ -149,3 +149,11 @@ export default props => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    text: {
+        // fontWeight: 'bold',
+        // padding: 7,
+        // fontSize: 15,
+    },
+})

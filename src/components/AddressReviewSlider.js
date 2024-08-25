@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Slider, Icon } from '@rneui/themed';
 
-const AddressReviewSlider = ({ onSliderValueChange }) => {
-  const [value, setValue] = useState(0);
+const AddressReviewSlider = ({ value, onSliderValueChange }) => {
+  const [sliderValue, setSliderValue] = useState(0);
   const [vertValue, setVertValue] = useState(0);
 
   // function that will handle the value change of the Slider and pass it as a prop from the parent component.
   const handleSliderValueChange = (newValue) => {
-    setValue(newValue);
+    setSliderValue(newValue);
     onSliderValueChange(newValue); // Pass the new value to the parent component
   };
 
+  useEffect(() => {
+    setSliderValue(value);
+  }, [value]);
+
   const interpolate = (start, end) => {
-    let k = (value - 0) / 10; // 0 =>min  && 10 => MAX
+    let k = (sliderValue - 0) / 10; // 0 =>min  && 10 => MAX
     return Math.ceil((1 - k) * start + k * end) % 256;
   };
 
@@ -29,7 +33,7 @@ const AddressReviewSlider = ({ onSliderValueChange }) => {
       <View style={styles.contentView}>
         <Text style={styles.text}>Deslize para avaliar</Text>
         <Slider
-          value={value}
+          value={sliderValue}
           onValueChange={handleSliderValueChange}
           maximumValue={10}
           minimumValue={0}
@@ -55,7 +59,7 @@ const AddressReviewSlider = ({ onSliderValueChange }) => {
           fontWeight: 'bold',
           padding: 10,
           fontSize: 15
-        }}>Nota: {value}</Text>
+        }}>Nota: {sliderValue}</Text>
       </View>
     </>
   );

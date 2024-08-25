@@ -79,7 +79,6 @@ export const AddressProvider = props => {
                         filteredParams[key] = addressToBeModified[key]; // exemplo filteredParam.city = updatedAddress.city
                     }
                 }
-
                 switch (currentAction) {
                     case 'getAddress':
                         response = await axios.get(`${API_URL}/address`);
@@ -90,7 +89,8 @@ export const AddressProvider = props => {
                         response = await axios.post(`${API_URL}/address`, filteredParams);
                         break
                     case 'updateAddress':
-                            await axios.put(`${API_URL}/address/${addressToBeUpdated.id}`, filteredParams);
+                        console.log('id do end atualizado' + addressToBeUpdated.id)
+                        await axios.put(`${API_URL}/address/${addressToBeUpdated.id}`, filteredParams);
                         break
 
                     case 'deleteAddress':

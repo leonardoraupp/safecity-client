@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 import AdressesContext from "../context/AdressesContext"; // Importe o contexto
 import { Formik, useFormik } from 'formik';
@@ -10,14 +10,14 @@ import SendButton from "../components/SendButton";
 export default ({ route, navigation }) => {
 
     const { dispatch } = useContext(AdressesContext) // Use o contexto
-
     const formik = useFormik({
         initialValues: {
+            id: route.params?.id || '',
             postalCode: route.params?.postalCode || '', // Valor inicial do CEP
             addressName: route.params?.addressName || '',
             city: route.params?.city || '',
             state: route.params?.state || '',
-            score: route.params?.sliderValue || '',
+            score: route.params?.score || '',
             comment: route.params?.comment || ''
         },
         validationSchema: Yup.object({
@@ -30,12 +30,11 @@ export default ({ route, navigation }) => {
                 .required("Campo cidade é obrigatório"),
             state: Yup.string()
                 .required("Campo estado é obrigatório"),
-            // sliderValue: Yup.required("Campo nota é obrigatório"),
         }),
         onSubmit: (values) => {
             // Lógica para lidar com o envio do formulário
             dispatch({
-                type: values.id ? 'updateAdress' : 'createAdress',
+                type: values.id ? 'updateAddress' : 'createAddress',
                 payload: values,
             });
             navigation.goBack();
@@ -56,14 +55,13 @@ export default ({ route, navigation }) => {
 
     // a function to receive the Slider value from the child component
     const handleSliderValueChange = (value) => {
-        formik.setFieldValue("score", value)
+        formik.setFieldValue("score", value) // change the score in formik when the user change the slider value.
     }
-
 
     return (
         <View style={styles.conteiner}>
             <View style={styles.form}>
-                <Text style={styles.text}>CEP</Text>
+                <Text style={styles.tittle}>CEP</Text>
                 <TextInput
                     style={styles.textInput}
                     placeholder="Informe o CEP"
@@ -81,7 +79,7 @@ export default ({ route, navigation }) => {
                     formik.touched.postalCode && formik.errors.postalCode && (
                         <Text style={{ color: 'red' }}>{formik.errors.postalCode}</Text>)
                 }
-                <Text style={styles.text}>Rua</Text>
+                <Text style={styles.tittle}>Rua</Text>
                 <TextInput
                     style={styles.textInput}
                     placeholder="Informe o nome da rua"
@@ -94,7 +92,7 @@ export default ({ route, navigation }) => {
                     formik.touched.addressName && formik.errors.addressName && (
                         <Text style={{ color: 'red' }}>{formik.errors.addressName}</Text>)
                 }
-                <Text style={styles.text}>Cidade</Text>
+                <Text style={styles.tittle}>Cidade</Text>
                 <TextInput
                     style={styles.textInput}
                     placeholder="Informe o nome da cidade"
@@ -105,7 +103,7 @@ export default ({ route, navigation }) => {
                 {formik.touched.city && formik.errors.city && (
                     <Text style={{ color: 'red' }}>{formik.errors.city}</Text>)
                 }
-                <Text style={styles.text}>Estado</Text>
+                <Text style={styles.tittle}>Estado</Text>
                 <TextInput
                     style={styles.textInput}
                     placeholder="Informe o nome do estado"
@@ -115,14 +113,14 @@ export default ({ route, navigation }) => {
                 {formik.touched.state && formik.errors.state && (
                     <Text style={{ color: 'red' }}>{formik.errors.state}</Text>)
                 }
-                <AddressReviewSlider onSliderValueChange={handleSliderValueChange} />
+                <AddressReviewSlider value={formik.values.score} onSliderValueChange={handleSliderValueChange} />
                 <TextInput
                     style={styles.commentInput}
                     placeholder="Informe seu relato pra gente!"
                     onChangeText={(comment) => { formik.setFieldValue('comment', comment) }}
                     value={formik.values.comment}
                 />
-                <SendButton onPress={formik.handleSubmit} title="Salvar" disabled={!formik.isValid}/>
+                <SendButton onPress={formik.handleSubmit} title="Salvar" disabled={!formik.isValid} />
             </View>
         </View>)
 }
@@ -146,11 +144,11 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 5, // Shadow for Android
     },
-    text: {
+    tittle: {
         color: 'black',
         fontWeight: 'bold', // Increase the weight
         padding: 7,
-        fontSize: 16,
+        fontSize: 18,
         marginBottom: 10,
     },
     textInput: {
@@ -163,7 +161,6 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     commentInput: {
-        color: 'black',
         fontWeight: 'bold', // Increase the weight
         height: '15%',
         borderWidth: 1,
