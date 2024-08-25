@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, Button } from "react-native";
+import { View, Text, TextInput, StyleSheet, Button, ScrollView } from "react-native";
 import AdressesContext from "../context/AdressesContext"; // Importe o contexto
 import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -59,7 +59,7 @@ export default ({ route, navigation }) => {
     }
 
     return (
-        <View style={styles.conteiner}>
+        <ScrollView contentContainerStyle={styles.conteiner}>
             <View style={styles.form}>
                 <Text style={styles.tittle}>CEP</Text>
                 <TextInput
@@ -122,7 +122,7 @@ export default ({ route, navigation }) => {
                 />
                 <SendButton onPress={formik.handleSubmit} title="Salvar" disabled={!formik.isValid} />
             </View>
-        </View>)
+        </ScrollView>)
 }
 const styles = StyleSheet.create({
     conteiner: {
