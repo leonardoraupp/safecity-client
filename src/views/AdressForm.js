@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, Button, ScrollView } from "react-native";
+import { View, Text, TextInput, StyleSheet, ScrollView, Dimensions } from "react-native";
 import AdressesContext from "../context/AdressesContext"; // Importe o contexto
 import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
 import AddressReviewSlider from "../components/AddressReviewSlider";
 import SendButton from "../components/SendButton";
+
+const { width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 export default ({ route, navigation }) => {
 
@@ -65,6 +68,7 @@ export default ({ route, navigation }) => {
                 <TextInput
                     style={styles.textInput}
                     placeholder="Informe o CEP"
+                    placeholderTextColor="#000000"
                     onChangeText={(postalCode) => {
                         formik.setFieldValue('postalCode', postalCode); // Chama a segunda  função
                         if (postalCode.length === 8) {
@@ -83,6 +87,7 @@ export default ({ route, navigation }) => {
                 <TextInput
                     style={styles.textInput}
                     placeholder="Informe o nome da rua"
+                    placeholderTextColor="#000000"
                     onChangeText={(addressName) => {
                         formik.setFieldValue('addressName', addressName)
                     }}
@@ -96,6 +101,7 @@ export default ({ route, navigation }) => {
                 <TextInput
                     style={styles.textInput}
                     placeholder="Informe o nome da cidade"
+                    placeholderTextColor="#000000"
                     onChangeText={formik.handleChange('city')}
                     value={formik.values.city}
 
@@ -107,6 +113,7 @@ export default ({ route, navigation }) => {
                 <TextInput
                     style={styles.textInput}
                     placeholder="Informe o nome do estado"
+                    placeholderTextColor="#000000"
                     onChangeText={formik.handleChange('state')}
                     value={formik.values.state}
                 />
@@ -117,22 +124,29 @@ export default ({ route, navigation }) => {
                 <TextInput
                     style={styles.commentInput}
                     placeholder="Informe seu relato pra gente!"
+                    placeholderTextColor="#000000"
                     onChangeText={(comment) => { formik.setFieldValue('comment', comment) }}
                     value={formik.values.comment}
                 />
-                <SendButton onPress={formik.handleSubmit} title="Salvar" disabled={!formik.isValid} />
+                <View>
+                    <SendButton onPress={formik.handleSubmit} title="Salvar" disabled={!formik.isValid} />
+                </View>
             </View>
         </ScrollView>)
 }
 const styles = StyleSheet.create({
     conteiner: {
-        flex: 1,
+        flexGrow: 1,
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
+        minHeight: height, // Ensure the container takes at least the full height of the screen
     },
     form: {
-        width: '100%',
+        flex: 1,
+        width: width * 0.9, // Relative width
+        minHeight: height, // Ensure the container takes at least the full height of the screen
+        alignSelf: 'center', // Center the card
         maxWidth: 400, // Max width for the form
         padding: 20, // Padding inside the form
         margin: 20, // Margin around the form
@@ -142,7 +156,8 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.8,
         shadowRadius: 2,
-        elevation: 5, // Shadow for Android
+        elevation: 5, // Shadow for Android,
+        justifyContent: 'space-between',
     },
     tittle: {
         color: 'black',
@@ -152,8 +167,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     textInput: {
-        color: 'black',
-        fontWeight: 'bold', // Increase the weight
+        color: '#000000',
+        fontSize: 15,
         borderWidth: 1,
         borderColor: 'gray',
         padding: 10,
@@ -161,7 +176,8 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     commentInput: {
-        fontWeight: 'bold', // Increase the weight
+        fontSize: 15,
+        color: 'black',
         height: '15%',
         borderWidth: 1,
         borderColor: "gray",

@@ -4,7 +4,7 @@ import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import addresses from "../data/adresses";
 import Config from 'react-native-config';
 
-const API_URL = Config.API_URL;
+const API_URL = "https://safecity-app-prc.onrender.com";
 
 const initialState = {
     addresses: [], // inicialmente vazio

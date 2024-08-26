@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from "react"
-import { View, Text, StyleSheet, FlatList } from "react-native"
+import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native"
 import { ListItem, Overlay, Button } from "@rneui/base";
 import AddressesContext from "../context/AdressesContext"
 import SendButton from "../components/SendButton";
+
+const { width } = Dimensions.get('window');
 
 export default ({ route, navigation }) => {
     const { state, dispatch } = useContext(AddressesContext) // usar contexto para poder trabalhar com os valores nesse compoente.
@@ -36,9 +38,9 @@ export default ({ route, navigation }) => {
         return (
             <ListItem bottomDivider onPress={() => openOverlay(address)} key={address.id}>
                 <Text style={{ fontWeight: 'bold', flexWrap: 'wrap', color: 'black' }} numberOfLines={2} ellipsizeMode="tail">Nota:</Text>
-                <Text style={{ fontWeight: 'bold', flexWrap: 'wrap' }} numberOfLines={1} ellipsizeMode="tail">{address.score || 0}</Text>
+                <Text style={{ flexWrap: 'wrap', color:'black' }} numberOfLines={1} ellipsizeMode="tail">{address.score || 0}</Text>
                 <Text style={{ fontWeight: 'bold', flexWrap: 'wrap', color: 'black' }} numberOfLines={2} ellipsizeMode="tail">Relato:</Text>
-                <Text style={{ fontWeight: 'bold', flexWrap: 'wrap' }} numberOfLines={1} ellipsizeMode="tail">{address.comment || "Não há"}</Text>
+                <Text style={{ flexWrap: 'wrap', color: 'black' }} numberOfLines={1} ellipsizeMode="tail">{address.comment || "Não há"}</Text>
             </ListItem>
         )
     }
@@ -60,7 +62,7 @@ export default ({ route, navigation }) => {
     }
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <View style={styles.addressInfo}>
                 <Text style={styles.tittle}>Endereço</Text>
                 <Text style={styles.text}>{route.params?.postalCode}, {route.params?.city}, {route.params?.state}</Text>
@@ -105,7 +107,8 @@ export default ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     addressInfo: {
-        width: '100%',
+        width: width * 0.9, // Relative width
+        alignSelf: 'center', // Center the card
         maxWidth: 400, // Max width for the form
         padding: 20, // Padding inside the form
         margin: 20, // Margin around the form
@@ -125,9 +128,9 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     text: {
-        fontWeight: 'bold',
         padding: 7,
         fontSize: 15,
+        color: 'black'
     },
     item: {
         padding: 20,
@@ -140,7 +143,7 @@ const styles = StyleSheet.create({
     overlay: {
         padding: 20,
         alignItems: 'center',
-        width: '100%',
+        width: width * 0.8, // Relative width for overlay
         maxWidth: 400, // Max width for the form
         margin: 20, // Margin around the form
         backgroundColor: '#fff', // Background color for the form

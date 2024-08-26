@@ -28,9 +28,15 @@ Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _roo
 # using npm
 npm run android
 
+# Generating the APK
+## The apk will be stored in <your-project-root>/app/build/outputs/apk/release/
+set ENVFILE=.env.production
+gradlew assembleRelease
+
 # OR using Yarn
 yarn android
 ```
+
 
 ### For iOS
 
